@@ -15,7 +15,7 @@ public class Repository {
 
   public User createUser(String userName) {
     return userMap.putIfAbsent(
-        userName.trim(),
+        userName,
         User.builder().name(userName).following(new HashSet<>()).posts(new ArrayList<>()).build());
   }
 

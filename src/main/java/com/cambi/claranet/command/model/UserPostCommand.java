@@ -3,7 +3,6 @@ package com.cambi.claranet.command.model;
 import com.cambi.claranet.command.model.abstr.ValidCommand;
 import com.cambi.claranet.repository.Repository;
 import com.cambi.claranet.user.User;
-import com.cambi.claranet.util.PostTimeFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

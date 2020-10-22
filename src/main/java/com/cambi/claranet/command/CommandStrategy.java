@@ -1,8 +1,6 @@
 package com.cambi.claranet.command;
 
-import com.cambi.claranet.command.model.ExitCommand;
-import com.cambi.claranet.command.model.InvalidCommand;
-import com.cambi.claranet.command.model.ReadingCommand;
+import com.cambi.claranet.command.model.*;
 import com.cambi.claranet.command.model.abstr.Command;
 import com.cambi.claranet.command.model.abstr.ValidCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +13,19 @@ import java.util.Set;
 @Component
 public class CommandStrategy {
 
-  private Set<ValidCommand> commands = new HashSet<>();
-  private InvalidCommand invalidCommand;
+  private final Set<ValidCommand> commands = new HashSet<>();
+  private final InvalidCommand invalidCommand;
 
   @Autowired
   public CommandStrategy(
-      ExitCommand exitCommand, ReadingCommand readingCommand, InvalidCommand invalidCommand) {
-    commands.addAll(Arrays.asList(exitCommand, readingCommand));
+      FollowCommand followCommand,
+      UserPostCommand userPostCommand,
+      WallCommand wallCommand,
+      ExitCommand exitCommand,
+      ReadingCommand readingCommand,
+      InvalidCommand invalidCommand) {
+    commands.addAll(
+        Arrays.asList(followCommand, userPostCommand, exitCommand, wallCommand, readingCommand));
     this.invalidCommand = invalidCommand;
   }
 
