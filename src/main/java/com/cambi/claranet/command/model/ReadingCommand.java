@@ -20,7 +20,8 @@ public class ReadingCommand extends ValidCommand {
 
   @Override
   public String execute(String input) {
-    User user = repository.getUser(input).get();
+    User user = repository.getUser(input).orElse(null);
+    if (null == user) return null;
 
     List<Post> posts = user.getPosts();
 

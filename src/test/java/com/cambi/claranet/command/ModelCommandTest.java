@@ -109,7 +109,7 @@ public class ModelCommandTest {
     user.setFollowing(new HashSet<>(Collections.singletonList(followed)));
 
     Mockito.lenient().when(repository.getUser("User")).thenReturn(Optional.of(user));
-    String output = wallCommand.execute("User");
+    String output = wallCommand.execute("User wall");
 
     String[] feed = output.split("\n");
     assertEquals(4, feed.length);

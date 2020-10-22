@@ -26,7 +26,7 @@ public class ClaranetApplication implements CommandLineRunner {
     boolean isExitCommand = false;
 
     while (!isExitCommand) {
-      System.out.println(PROMPT);
+      System.out.print(PROMPT);
       String input = commandScanner.getNextLine();
       Command command = commandExecutor.execute(input);
       isExitCommand = command.isExitCommand();

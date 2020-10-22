@@ -7,25 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedHashSet;
 
 @Component
 public class CommandStrategy {
 
-  private final Set<ValidCommand> commands = new HashSet<>();
+  private final LinkedHashSet<ValidCommand> commands = new LinkedHashSet<>();
   private final InvalidCommand invalidCommand;
 
   @Autowired
   public CommandStrategy(
+      ExitCommand exitCommand,
       FollowCommand followCommand,
       UserPostCommand userPostCommand,
       WallCommand wallCommand,
-      ExitCommand exitCommand,
       ReadingCommand readingCommand,
       InvalidCommand invalidCommand) {
     commands.addAll(
-        Arrays.asList(followCommand, userPostCommand, exitCommand, wallCommand, readingCommand));
+        Arrays.asList(exitCommand, followCommand, userPostCommand, wallCommand, readingCommand));
     this.invalidCommand = invalidCommand;
   }
 

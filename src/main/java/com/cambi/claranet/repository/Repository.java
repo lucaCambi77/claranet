@@ -14,9 +14,11 @@ public class Repository {
   }
 
   public User createUser(String userName) {
-    return userMap.putIfAbsent(
+    userMap.putIfAbsent(
         userName,
         User.builder().name(userName).following(new HashSet<>()).posts(new ArrayList<>()).build());
+
+    return getUser(userName).get();
   }
 
   public User updateUser(String userName, User user) {

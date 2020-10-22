@@ -20,7 +20,7 @@ public class WallCommand extends ValidCommand {
 
   @Override
   public String execute(String input) {
-    User user = repository.getUser(input).get();
+    User user = repository.getUser(input.split("wall")[0].trim()).get();
 
     ArrayList<Post> posts = new ArrayList<>(user.getPosts());
 
