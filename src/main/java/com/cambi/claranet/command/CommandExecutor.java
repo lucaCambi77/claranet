@@ -1,6 +1,6 @@
 package com.cambi.claranet.command;
 
-import com.cambi.claranet.model.abstr.Command;
+import com.cambi.claranet.command.model.abstr.Command;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

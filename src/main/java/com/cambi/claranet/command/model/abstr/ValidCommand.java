@@ -1,4 +1,4 @@
-package com.cambi.claranet.model.abstr;
+package com.cambi.claranet.command.model.abstr;
 
 import java.util.regex.Pattern;
 

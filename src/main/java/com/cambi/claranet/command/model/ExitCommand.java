@@ -1,6 +1,6 @@
-package com.cambi.claranet.model;
+package com.cambi.claranet.command.model;
 
-import com.cambi.claranet.model.abstr.ValidCommand;
+import com.cambi.claranet.command.model.abstr.ValidCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class ExitCommand extends ValidCommand {
 
   @Override
-  public String getOutputFrom(String args) {
+  public String execute(String args) {
     return args + " ... Bye Bye!";
   }
 

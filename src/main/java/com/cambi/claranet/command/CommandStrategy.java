@@ -1,10 +1,10 @@
 package com.cambi.claranet.command;
 
-import com.cambi.claranet.model.ExitCommand;
-import com.cambi.claranet.model.InvalidCommand;
-import com.cambi.claranet.model.ReadingCommand;
-import com.cambi.claranet.model.abstr.Command;
-import com.cambi.claranet.model.abstr.ValidCommand;
+import com.cambi.claranet.command.model.ExitCommand;
+import com.cambi.claranet.command.model.InvalidCommand;
+import com.cambi.claranet.command.model.ReadingCommand;
+import com.cambi.claranet.command.model.abstr.Command;
+import com.cambi.claranet.command.model.abstr.ValidCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
