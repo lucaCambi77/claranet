@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,15 +14,14 @@ public class ModelMatcherTest {
 
   @InjectMocks private ExitCommand exitCommand;
   @InjectMocks private UserPostCommand postCommand;
-  @InjectMocks private InvalidCommand invalidCommand;
+  @InjectMocks private DefaultCommand invalidCommand;
   @InjectMocks private WallCommand wallCommand;
   @InjectMocks private FollowCommand followCommand;
 
   @Test
   public void checkInvalidCommand() {
 
-    ReflectionTestUtils.setField(invalidCommand, "invalidCommand", "Very bad command : %s");
-    assertEquals("Very bad command : some bad command", invalidCommand.execute("some bad command"));
+    assertEquals(null, invalidCommand.execute("some bad command"));
   }
 
   @Test

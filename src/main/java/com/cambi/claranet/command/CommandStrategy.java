@@ -13,16 +13,16 @@ import java.util.LinkedHashSet;
 public class CommandStrategy {
 
   private final LinkedHashSet<ValidCommand> commands = new LinkedHashSet<>();
-  private final InvalidCommand invalidCommand;
+  private final DefaultCommand invalidCommand;
 
   @Autowired
   public CommandStrategy(
-      ExitCommand exitCommand,
-      FollowCommand followCommand,
-      UserPostCommand userPostCommand,
-      WallCommand wallCommand,
-      ReadingCommand readingCommand,
-      InvalidCommand invalidCommand) {
+          ExitCommand exitCommand,
+          FollowCommand followCommand,
+          UserPostCommand userPostCommand,
+          WallCommand wallCommand,
+          ReadingCommand readingCommand,
+          DefaultCommand invalidCommand) {
     commands.addAll(
         Arrays.asList(exitCommand, followCommand, userPostCommand, wallCommand, readingCommand));
     this.invalidCommand = invalidCommand;

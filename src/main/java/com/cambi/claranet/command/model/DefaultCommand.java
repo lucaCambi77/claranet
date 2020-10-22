@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class InvalidCommand extends Command {
+public class DefaultCommand extends Command {
 
-  private String invalidCommand = "%s is an invalid command!";
+  private String defaultCommand = null;
 
   @Override
   public String execute(String args) {
-    return String.format(invalidCommand, args);
+    return defaultCommand;
   }
 }
