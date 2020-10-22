@@ -1,10 +1,10 @@
 package com.cambi.claranet.application;
 
 import com.cambi.claranet.ClaranetApplication;
-import com.cambi.claranet.model.ExitCommand;
-import com.cambi.claranet.model.ReadingCommand;
 import com.cambi.claranet.command.CommandExecutor;
 import com.cambi.claranet.command.CommandScanner;
+import com.cambi.claranet.command.model.ExitCommand;
+import com.cambi.claranet.command.model.ReadingCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,5 +1,7 @@
-package com.cambi.claranet.command.model;
+package com.cambi.claranet.model;
 
+import com.cambi.claranet.command.model.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ModelMatcherTest {
 
   @InjectMocks private ExitCommand exitCommand;
-  @InjectMocks private PostCommand postCommand;
+  @InjectMocks private UserPostCommand postCommand;
   @InjectMocks private InvalidCommand invalidCommand;
   @InjectMocks private WallCommand wallCommand;
   @InjectMocks private FollowCommand followCommand;
@@ -24,7 +26,7 @@ public class ModelMatcherTest {
   public void checkInvalidCommand() {
 
     ReflectionTestUtils.setField(invalidCommand, "invalidCommand", "Very bad command : %s");
-    assertEquals("Very bad command : some bad command", invalidCommand.getOutputFrom("some bad command"));
+    assertEquals("Very bad command : some bad command", invalidCommand.execute("some bad command"));
   }
 
   @Test
@@ -40,34 +42,34 @@ public class ModelMatcherTest {
   @Test
   public void checkPostCommand() {
 
-    assertFalse(postCommand.isExitCommand());
-    assertTrue(postCommand.matches("Alice -> Hello World!"));
-    assertTrue(postCommand.matches("Alice09 -> Hello World!"));
-    assertFalse(postCommand.matches("Alice09 -> "));
-    assertFalse(postCommand.matches("Alice09"));
-    assertFalse(postCommand.matches("Alice09 wall"));
-    assertFalse(postCommand.matches("Alice09 follow Julia"));
-    assertFalse(postCommand.matches(" -> Hello World!"));
-    assertFalse(postCommand.matches("exit"));
+    Assertions.assertFalse(postCommand.isExitCommand());
+    Assertions.assertTrue(postCommand.matches("Alice -> Hello World!"));
+    Assertions.assertTrue(postCommand.matches("Alice09 -> Hello World!"));
+    Assertions.assertFalse(postCommand.matches("Alice09 -> "));
+    Assertions.assertFalse(postCommand.matches("Alice09"));
+    Assertions.assertFalse(postCommand.matches("Alice09 wall"));
+    Assertions.assertFalse(postCommand.matches("Alice09 follow Julia"));
+    Assertions.assertFalse(postCommand.matches(" -> Hello World!"));
+    Assertions.assertFalse(postCommand.matches("exit"));
   }
 
   @Test
   public void checkWallCommand() {
 
-    assertFalse(wallCommand.isExitCommand());
-    assertTrue(wallCommand.matches("Alice wall"));
-    assertFalse(wallCommand.matches("Alice09 -> Hello World!"));
-    assertFalse(wallCommand.matches("Alice09 follow Julia"));
-    assertFalse(wallCommand.matches("exit"));
+    Assertions.assertFalse(wallCommand.isExitCommand());
+    Assertions.assertTrue(wallCommand.matches("Alice wall"));
+    Assertions.assertFalse(wallCommand.matches("Alice09 -> Hello World!"));
+    Assertions.assertFalse(wallCommand.matches("Alice09 follow Julia"));
+    Assertions.assertFalse(wallCommand.matches("exit"));
   }
 
   @Test
   public void checkFollowCommand() {
 
-    assertFalse(followCommand.isExitCommand());
-    assertTrue(followCommand.matches("Alice follow Julia"));
-    assertFalse(followCommand.matches("Alice09 -> Hello World!"));
-    assertFalse(followCommand.matches("Alice09 wall"));
-    assertFalse(followCommand.matches("exit"));
+    Assertions.assertFalse(followCommand.isExitCommand());
+    Assertions.assertTrue(followCommand.matches("Alice follow Julia"));
+    Assertions.assertFalse(followCommand.matches("Alice09 -> Hello World!"));
+    Assertions.assertFalse(followCommand.matches("Alice09 wall"));
+    Assertions.assertFalse(followCommand.matches("exit"));
   }
 }
