@@ -1,22 +1,14 @@
 package com.cambi.claranet.repository;
 
-import com.cambi.claranet.user.Post;
 import com.cambi.claranet.user.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(JUnitPlatform.class)
 @ExtendWith(MockitoExtension.class)
 public class RepositoryTest {
 
@@ -32,35 +24,28 @@ public class RepositoryTest {
   public void should_update_user() {
     repository.createUser("User");
     assertEquals(0, repository.getUser("User").get().getPosts().size());
+    User newUser = repository.getUser("User").get();
 
-    repository.updateUser(
-        "User",
-        User.builder()
-            .name("User")
-            .posts(
-                Arrays.asList(
-                    Post.builder().userName("User").publishDate(new Date()).build(),
-                    Post.builder().userName("User").publishDate(new Date()).build()))
-            .build());
+    newUser.addPost("Hello world");
+    newUser.addPost("Hello world2");
 
     assertEquals(2, repository.getUser("User").get().getPosts().size());
+    assertEquals("User", repository.getUser("User").get().getName());
+
+    repository.createUser("Followed");
+
+    User followed = repository.getUser("Followed").get();
+    followed.addPost("Hello world");
+    followed.addPost("Hello world2");
 
     User updatedUser = repository.getUser("User").get();
-
-    updatedUser.setFollowing(
-        new HashSet(
-            Arrays.asList(
-                User.builder()
-                    .name("User2")
-                    .posts(
-                        Arrays.asList(
-                            Post.builder().userName("User").publishDate(new Date()).build(),
-                            Post.builder().userName("User").publishDate(new Date()).build()))
-                    .build())));
+    updatedUser.addToFollowing(repository.getUser("Followed").get());
 
     assertEquals(2, repository.getUser("User").get().getPosts().size());
     assertEquals(1, repository.getUser("User").get().getFollowing().size());
     assertEquals(
         2, repository.getUser("User").get().getFollowing().iterator().next().getPosts().size());
+    assertEquals(
+        "Followed", repository.getUser("User").get().getFollowing().iterator().next().getName());
   }
 }

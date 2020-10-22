@@ -19,7 +19,7 @@ public class User {
   private Set<User> following;
 
   public void addPost(String message) {
-    posts.add(Post.builder().message(message).publishDate(new Date()).build());
+    posts.add(Post.builder().userName(name).message(message).publishDate(new Date()).build());
   }
 
   public void addToFollowing(User user) {
