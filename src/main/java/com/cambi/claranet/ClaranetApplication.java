@@ -1,8 +1,8 @@
 package com.cambi.claranet;
 
-import com.cambi.claranet.model.Command;
 import com.cambi.claranet.command.CommandExecutor;
 import com.cambi.claranet.command.CommandScanner;
+import com.cambi.claranet.model.abstr.Command;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

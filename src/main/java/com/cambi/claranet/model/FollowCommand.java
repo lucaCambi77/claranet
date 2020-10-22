@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 @Component
 @RequiredArgsConstructor
-public class ReadingCommand extends ValidCommand {
+public class FollowCommand extends ValidCommand {
 
   @Override
   public String getOutputFrom(String args) {
@@ -17,6 +17,6 @@ public class ReadingCommand extends ValidCommand {
 
   @Override
   public Pattern getPattern() {
-    return Pattern.compile("^[A-Za-z0-9]+$");
+    return Pattern.compile("^[A-Za-z-0-9]+ follow [A-Za-z-0-9]+$");
   }
 }
