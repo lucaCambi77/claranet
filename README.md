@@ -24,12 +24,12 @@ java -jar build/libs/claranet-1.0.0.jar
 
 ### Shell commands
 
-○ posting: User -> message
+○ posting: ***User -> message***
 
-○ reading: User
+○ reading: ***User***
 
-○ following: User follow User2
+○ following: ***User follow User2***
 
-○ wall: User wall
+○ wall: ***User wall***
 
 All other input are invalid and displayed as default new lines
