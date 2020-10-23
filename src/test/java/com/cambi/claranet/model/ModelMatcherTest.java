@@ -21,7 +21,7 @@ public class ModelMatcherTest {
   @Test
   public void checkInvalidCommand() {
 
-    assertEquals(null, invalidCommand.execute("some bad command"));
+    assertNull(invalidCommand.execute("some bad command"));
   }
 
   @Test

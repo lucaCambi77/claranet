@@ -105,8 +105,8 @@ public class ModelCommandTest {
             .name("Followed")
             .posts(
                 Arrays.asList(
-                    Post.builder().userName("User").publishDate(new Date()).build(),
-                    Post.builder().userName("User").publishDate(new Date()).build()))
+                    Post.builder().userName("Followed").publishDate(new Date()).build(),
+                    Post.builder().userName("Followed").publishDate(new Date()).build()))
             .build();
 
     user.setFollowing(new HashSet<>(Collections.singletonList(followed)));

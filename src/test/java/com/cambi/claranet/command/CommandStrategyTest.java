@@ -32,7 +32,7 @@ public class CommandStrategyTest {
   }
 
   @Test
-  public void should_not_find__command() {
+  public void should_not_find_command() {
 
     String input = "input";
 
