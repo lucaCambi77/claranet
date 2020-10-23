@@ -4,7 +4,7 @@
 
 ## Requirements : 
 
-* Java11
+* Java 8/11
 * Gradle
 
 ## Getting Started

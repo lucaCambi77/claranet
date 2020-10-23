@@ -20,6 +20,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -76,15 +77,17 @@ public class ModelCommandTest {
   @Test
   public void should_follow_user() {
 
-    Mockito.lenient().when(user.getFollowing()).thenReturn(new HashSet<>(Collections.singletonList(following)));
+    Mockito.lenient()
+        .when(user.getFollowing())
+        .thenReturn(new HashSet<>(Collections.singletonList(following)));
 
     Mockito.lenient().when(repository.getUser("User")).thenReturn(Optional.of(user));
     Mockito.lenient().when(repository.getUser("User2")).thenReturn(Optional.of(following));
 
     assertNull(followCommand.execute("User follow User2"));
 
-    verify(repository).getUser("User");
-    verify(repository).getUser("User2");
+    verify(repository, atLeastOnce()).getUser("User");
+    verify(repository, atLeastOnce()).getUser("User2");
     verify(user).addToFollowing(following);
     verify(repository).updateUser("User", user);
   }

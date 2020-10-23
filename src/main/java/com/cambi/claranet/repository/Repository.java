@@ -10,7 +10,7 @@ public class Repository {
   private Map<String, User> userMap = new HashMap<>();
 
   public Optional<User> getUser(String userName) {
-    return Optional.ofNullable(userMap.get(userName));
+    return null == userMap.get(userName) ? Optional.empty() : Optional.of(userMap.get(userName));
   }
 
   public User createUser(String userName) {
@@ -22,6 +22,8 @@ public class Repository {
   }
 
   public User updateUser(String userName, User user) {
+    if (null == user || null == userMap.get(userName)) return null;
+
     return userMap.put(userName, user);
   }
 }

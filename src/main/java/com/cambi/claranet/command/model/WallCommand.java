@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,10 @@ public class WallCommand extends ValidCommand {
 
   @Override
   public String execute(String input) {
+    Optional<User> aUser = repository.getUser(input.split("wall")[0].trim());
+
+    if (!aUser.isPresent()) return null;
+
     User user = repository.getUser(input.split("wall")[0].trim()).get();
 
     ArrayList<Post> posts = new ArrayList<>(user.getPosts());

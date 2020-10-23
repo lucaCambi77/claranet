@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -20,8 +21,11 @@ public class ReadingCommand extends ValidCommand {
 
   @Override
   public String execute(String input) {
-    User user = repository.getUser(input).orElse(null);
-    if (null == user) return null;
+    Optional<User> aUser = repository.getUser(input.trim());
+
+    if (!aUser.isPresent()) return null;
+
+    User user = aUser.get();
 
     List<Post> posts = user.getPosts();
 

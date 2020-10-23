@@ -20,6 +20,9 @@ public class FollowCommand extends ValidCommand {
 
     String user = splittedInput[0].trim();
 
+    if (!repository.getUser(user).isPresent()
+        || !repository.getUser(splittedInput[1].trim()).isPresent()) return null;
+
     User follower = repository.getUser(user).get();
 
     follower.addToFollowing(repository.getUser(splittedInput[1].trim()).get());
