@@ -1,4 +1,4 @@
-# WellD code challenge
+# Claranet code challenge
 
 [See description](https://github.com/xpeppers/social_networking_kata)
 
