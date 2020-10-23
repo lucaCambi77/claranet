@@ -28,8 +28,8 @@ java -jar build/libs/claranet-1.0.0.jar
 
 ○ reading: User
 
-○ following: User follows User2
+○ following: User follow User2
 
-○ wall: User wall User2
+○ wall: User wall
 
 All other input are invalid and displayed as default new lines
