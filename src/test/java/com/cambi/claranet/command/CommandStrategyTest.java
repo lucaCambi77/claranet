@@ -20,13 +20,22 @@ public class CommandStrategyTest {
   @Mock FollowCommand followCommand;
   @Mock UserPostCommand userPostCommand;
   @Mock WallCommand wallCommand;
+  @Mock DefaultCommand defaultCommand;
 
   @Test
-  public void should_execute_command() {
+  public void should_find_command() {
 
     String input = "input";
     when(readingCommand.matches(input)).thenReturn(true);
 
     assertEquals(readingCommand, commandStrategy.getCommandFrom(input));
+  }
+
+  @Test
+  public void should_not_find__command() {
+
+    String input = "input";
+
+    assertEquals(defaultCommand, commandStrategy.getCommandFrom(input));
   }
 }
