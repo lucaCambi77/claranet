@@ -6,7 +6,6 @@ import com.cambi.claranet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Component
@@ -22,9 +21,7 @@ public class UserPostCommand extends ValidCommand {
 
     String user = splittedInput[0].trim();
 
-    Optional<User> aUser = repository.getUser(user);
-
-    User userObject = aUser.orElseGet(() -> repository.createUser(user));
+    User userObject = repository.getUser(user).orElseGet(() -> repository.createUser(user));
 
     userObject.addPost(splittedInput[1].trim());
 
