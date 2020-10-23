@@ -9,7 +9,7 @@
 
 ## Getting Started
 
-Clone the project locally from ***git@github.com:lucaCambi77/claranet.git***
+Clone the project locally from *git@github.com:lucaCambi77/claranet.git*
 
 * To build the project 
 ```bash
