@@ -35,7 +35,6 @@ public class UserPostCommand extends ValidCommand {
 
   @Override
   public Pattern getPattern() {
-    Pattern compile = Pattern.compile("^[A-Za-z-0-9]+ -> (.+)$");
-    return compile;
+    return Pattern.compile("^[A-Za-z-0-9]+ -> (.+)$");
   }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 
 @Component
 public class CommandStrategy {
@@ -17,12 +18,12 @@ public class CommandStrategy {
 
   @Autowired
   public CommandStrategy(
-          ExitCommand exitCommand,
-          FollowCommand followCommand,
-          UserPostCommand userPostCommand,
-          WallCommand wallCommand,
-          ReadingCommand readingCommand,
-          DefaultCommand invalidCommand) {
+      ExitCommand exitCommand,
+      FollowCommand followCommand,
+      UserPostCommand userPostCommand,
+      WallCommand wallCommand,
+      ReadingCommand readingCommand,
+      DefaultCommand invalidCommand) {
     commands.addAll(
         Arrays.asList(exitCommand, followCommand, userPostCommand, wallCommand, readingCommand));
     this.invalidCommand = invalidCommand;
@@ -30,8 +31,7 @@ public class CommandStrategy {
 
   public Command getCommandFrom(String input) {
 
-    for (ValidCommand command : commands) if (command.matches(input)) return command;
-
-    return invalidCommand;
+    Optional<ValidCommand> command = commands.stream().filter(c -> c.matches(input)).findAny();
+    return command.isPresent() ? command.get() : invalidCommand;
   }
 }

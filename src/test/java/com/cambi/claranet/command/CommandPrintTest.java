@@ -17,7 +17,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class CommandTest {
+public class CommandPrintTest {
 
   @InjectMocks CommandAgent commandAgent;
   @Mock WallCommand wallCommand;
