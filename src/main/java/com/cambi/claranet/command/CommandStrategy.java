@@ -31,9 +31,6 @@ public class CommandStrategy {
 
   public Command getCommandFrom(String input) {
 
-    for (ValidCommand command : commands) {
-      System.out.println(command.matches(input));
-    }
     Optional<ValidCommand> command = commands.stream().filter(c -> c.matches(input)).findAny();
     return command.isPresent() ? command.get() : invalidCommand;
   }
