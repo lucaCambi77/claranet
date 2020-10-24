@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,7 @@ public class WallCommand extends ValidCommand {
             });
 
     return posts.stream()
-        .sorted(Comparator.comparing(Post::getPublishDate))
+        .sorted((p1, p2) -> p2.getPublishDate().compareTo(p1.getPublishDate()))
         .map(Object::toString)
         .collect(Collectors.joining("\n"));
   }
