@@ -6,8 +6,6 @@ import com.cambi.claranet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.regex.Pattern;
-
 @Component
 @RequiredArgsConstructor
 public class UserPostCommand extends ValidCommand {
@@ -31,7 +29,7 @@ public class UserPostCommand extends ValidCommand {
   }
 
   @Override
-  public Pattern getPattern() {
-    return Pattern.compile("^[A-Za-z-0-9]+ -> (.+)$");
+  public String getPattern() {
+    return "^[A-Za-z-0-9]+ -> (.+)$";
   }
 }

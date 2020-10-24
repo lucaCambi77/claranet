@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
@@ -36,7 +35,7 @@ public class ReadingCommand extends ValidCommand {
   }
 
   @Override
-  public Pattern getPattern() {
-    return Pattern.compile("^[A-Za-z0-9]+$");
+  public String getPattern() {
+    return "^[A-Za-z0-9]+$";
   }
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
@@ -42,7 +41,7 @@ public class WallCommand extends ValidCommand {
   }
 
   @Override
-  public Pattern getPattern() {
-    return Pattern.compile("^[A-Za-z-0-9]+ wall$");
+  public String getPattern() {
+    return "^[A-Za-z-0-9]+ wall$";
   }
 }

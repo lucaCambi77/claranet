@@ -1,12 +1,10 @@
 package com.cambi.claranet.command.model.abstr;
 
-import java.util.regex.Pattern;
-
 public abstract class ValidCommand extends Command {
 
-  public boolean matches(String input) {
-    return getPattern().matcher(input).matches();
-  }
+  public abstract String getPattern();
 
-  public abstract Pattern getPattern();
+  public boolean matches(String input) {
+    return input.matches(getPattern());
+  }
 }

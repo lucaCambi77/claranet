@@ -6,8 +6,6 @@ import com.cambi.claranet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.regex.Pattern;
-
 @Component
 @RequiredArgsConstructor
 public class FollowCommand extends ValidCommand {
@@ -33,7 +31,7 @@ public class FollowCommand extends ValidCommand {
   }
 
   @Override
-  public Pattern getPattern() {
-    return Pattern.compile("^[A-Za-z-0-9]+ follow [A-Za-z-0-9]+$");
+  public String getPattern() {
+    return "^[A-Za-z-0-9]+ follow [A-Za-z-0-9]+$";
   }
 }

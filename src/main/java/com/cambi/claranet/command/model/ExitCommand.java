@@ -3,8 +3,6 @@ package com.cambi.claranet.command.model;
 import com.cambi.claranet.command.model.abstr.ValidCommand;
 import org.springframework.stereotype.Component;
 
-import java.util.regex.Pattern;
-
 @Component
 public class ExitCommand extends ValidCommand {
 
@@ -14,8 +12,8 @@ public class ExitCommand extends ValidCommand {
   }
 
   @Override
-  public Pattern getPattern() {
-    return Pattern.compile("^exit$");
+  public String getPattern() {
+    return "^exit$";
   }
 
   @Override
