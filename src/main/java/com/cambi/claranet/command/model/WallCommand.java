@@ -23,7 +23,8 @@ public class WallCommand extends ValidCommand {
 
     if (!aUser.isPresent()) return null;
 
-    User user = repository.getUser(input.split("wall")[0].trim()).get();
+    User user = repository
+            .getUser(input.split("wall")[0].trim()).get();
 
     ArrayList<Post> posts = new ArrayList<>(user.getPosts());
 
