@@ -1,5 +1,11 @@
 package com.cambi.claranet.command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+
 import com.cambi.claranet.command.model.FollowCommand;
 import com.cambi.claranet.command.model.ReadingCommand;
 import com.cambi.claranet.command.model.UserPostCommand;
@@ -7,6 +13,7 @@ import com.cambi.claranet.command.model.WallCommand;
 import com.cambi.claranet.repository.Repository;
 import com.cambi.claranet.user.Post;
 import com.cambi.claranet.user.User;
+import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,14 +21,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class ModelCommandTest {

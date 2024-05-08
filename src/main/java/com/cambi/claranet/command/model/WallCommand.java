@@ -4,12 +4,11 @@ import com.cambi.claranet.command.model.abstr.ValidCommand;
 import com.cambi.claranet.repository.Repository;
 import com.cambi.claranet.user.Post;
 import com.cambi.claranet.user.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

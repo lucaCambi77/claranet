@@ -1,6 +1,8 @@
 package com.cambi.claranet.application;
 
-import com.cambi.claranet.ClaranetApplication;
+import static org.mockito.Mockito.*;
+
+import com.cambi.claranet.Application;
 import com.cambi.claranet.command.CommandExecutor;
 import com.cambi.claranet.command.CommandScanner;
 import com.cambi.claranet.command.model.ExitCommand;
@@ -13,12 +15,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 public class ClaranetApplicationTest {
 
-  @InjectMocks ClaranetApplication claranetApplication;
+  @InjectMocks
+  Application claranetApplication;
 
   @Mock ReadingCommand readCommand;
 

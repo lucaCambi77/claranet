@@ -1,13 +1,12 @@
 package com.cambi.claranet.user;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @Builder
 @Getter

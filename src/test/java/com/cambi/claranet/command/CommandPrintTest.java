@@ -1,7 +1,11 @@
 package com.cambi.claranet.command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.cambi.claranet.command.model.UserPostCommand;
 import com.cambi.claranet.command.model.WallCommand;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class CommandPrintTest {

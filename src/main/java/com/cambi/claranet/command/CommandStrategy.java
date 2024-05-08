@@ -3,12 +3,11 @@ package com.cambi.claranet.command;
 import com.cambi.claranet.command.model.*;
 import com.cambi.claranet.command.model.abstr.Command;
 import com.cambi.claranet.command.model.abstr.ValidCommand;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CommandStrategy {

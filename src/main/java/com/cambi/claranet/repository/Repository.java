@@ -1,9 +1,8 @@
 package com.cambi.claranet.repository;
 
 import com.cambi.claranet.user.User;
-import org.springframework.stereotype.Component;
-
 import java.util.*;
+import org.springframework.stereotype.Component;
 
 @Component
 public class Repository {

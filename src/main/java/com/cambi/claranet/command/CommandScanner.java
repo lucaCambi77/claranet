@@ -1,8 +1,7 @@
 package com.cambi.claranet.command;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CommandScanner {

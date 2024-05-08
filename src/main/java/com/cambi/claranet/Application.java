@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class ClaranetApplication implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 
   public static void main(String[] args) {
-    SpringApplication.run(ClaranetApplication.class, args);
+    SpringApplication.run(Application.class, args);
   }
 
   final CommandExecutor commandExecutor;

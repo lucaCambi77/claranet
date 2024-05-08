@@ -1,11 +1,10 @@
 package com.cambi.claranet.user;
 
 import com.cambi.claranet.util.PostTimeFormatter;
+import java.util.Date;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Builder
 @Getter
