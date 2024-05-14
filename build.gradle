@@ -1,19 +1,5 @@
-import org.springframework.boot.gradle.plugin.SpringBootPlugin
-
 plugins {
-    id "org.springframework.boot" version "3.2.5" apply false
-    id "io.freefair.lombok" version "8.0.1"
     id 'java'
-    id 'io.spring.dependency-management' version "1.1.5"
-}
-
-group = 'com.cambi'
-version = '1.0.0'
-
-dependencyManagement {
-    imports {
-        mavenBom(SpringBootPlugin.BOM_COORDINATES)
-    }
 }
 
 repositories {
@@ -25,28 +11,14 @@ repositories {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-devtools'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.27.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-    testImplementation(
-            'junit:junit',
-            'org.springframework.boot:spring-boot-starter-test'
-    )
 }
+
 
 test {
     useJUnitPlatform()
-}
-
-jar {
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    manifest {
-        attributes "Main-Class": "com.cambi.claranet.Application"
-    }
-
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
 }
