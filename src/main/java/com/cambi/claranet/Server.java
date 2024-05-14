@@ -20,11 +20,13 @@ import java.util.stream.Collectors;
 
 public class Server implements Runnable {
 
+  private Socket client;
   private final ArrayList<ServerThread> threadList = new ArrayList<>();
   private final ExecutorService executorService = Executors.newCachedThreadPool();
   private ServerSocket serversocket;
   private final Map<String, User> userMap = new HashMap<>();
   private final Repository repository = new Repository();
+  private boolean running = true;
 
   @Override
   public void run() {
@@ -32,14 +34,24 @@ public class Server implements Runnable {
     try {
       serversocket = new ServerSocket(5000);
 
-      while (true) {
-        Socket socket = serversocket.accept();
-        ServerThread serverThread = new ServerThread(socket);
+      while (running) {
+        client = serversocket.accept();
+        ServerThread serverThread = new ServerThread(client);
         threadList.add(serverThread);
         executorService.execute(serverThread);
       }
     } catch (Exception e) {
-      System.out.println("Error occured in main: " + e.getStackTrace());
+      shoutDown();
+    }
+  }
+
+  private void shoutDown() {
+    try {
+      running = false;
+      serversocket.close();
+      threadList.forEach(ServerThread::shoutDown);
+    } catch (IOException e) {
+
     }
   }
 
@@ -75,73 +87,13 @@ public class Server implements Runnable {
 
         while ((msg = input.readLine()) != null) {
           if (msg.matches("^[A-Za-z-0-9]+ -> (.+)$")) { // Post
-            broadcast(msg);
-
-            String[] userMessage = msg.split("->");
-
-            String user = userMessage[0].trim();
-            String message = userMessage[1].trim();
-
-            repository.savePost(user, message);
-
+            postAction(msg);
           } else if (msg.matches("^[A-Za-z0-9]+$")) { // Read
-
-            Optional<User> read = repository.getUser(msg.trim());
-
-            if (read.isPresent()) {
-
-              output.println(
-                  read.map(
-                      user ->
-                          user.posts().stream()
-                              .sorted((p1, p2) -> p2.publishDate().compareTo(p1.publishDate()))
-                              .map(Object::toString)
-                              .collect(Collectors.joining("\n"))));
-            } else {
-              output.println("User not found" + msg);
-            }
-
+            readAction(msg);
           } else if (msg.matches("^[A-Za-z-0-9]+ follow [A-Za-z-0-9]+$")) { // Follow
-
-            String[] splittedInput = msg.split("follow");
-
-            String user = splittedInput[0].trim();
-            String follow = splittedInput[1].trim();
-
-            if (repository.getUser(user).isEmpty() || repository.getUser(follow).isEmpty()) {
-              output.println("User not found" + msg);
-            } else {
-              User follower = repository.getUser(user).get();
-
-              follower.addToFollowing(repository.getUser(follow).get());
-
-              repository.updateUser(user, follower);
-            }
-
+            followAction(msg);
           } else if (msg.matches("^[A-Za-z-0-9]+ wall$")) { // Wall
-
-            Optional<User> aUser = repository.getUser(msg.split("wall")[0].trim());
-
-            if (aUser.isPresent()) {
-              User user = aUser.get();
-
-              ArrayList<Post> posts = new ArrayList<>(user.posts());
-
-              user.following()
-                  .forEach(
-                      u -> {
-                        posts.addAll(u.posts());
-                      });
-
-              output.println(
-                  posts.stream()
-                      .sorted((p1, p2) -> p2.publishDate().compareTo(p1.publishDate()))
-                      .map(Object::toString)
-                      .collect(Collectors.joining("\n")));
-            } else {
-              output.println("User not found: " + msg.split("wall")[0]);
-            }
-
+            wallAction(msg);
           } else if (msg.matches("^exit$")) {
             shoutDown();
           } else {
@@ -154,18 +106,84 @@ public class Server implements Runnable {
       }
     }
 
+    private void shoutDown() {
+      try {
+        input.close();
+        output.close();
+        client.close();
+      } catch (IOException e) {
+
+      }
+    }
+
+    private void wallAction(String msg) {
+      Optional<User> aUser = repository.getUser(msg.split("wall")[0].trim());
+
+      if (aUser.isPresent()) {
+        User user = aUser.get();
+
+        ArrayList<Post> posts = new ArrayList<>(user.posts());
+
+        user.following().forEach(u -> posts.addAll(u.posts()));
+
+        output.println(
+            posts.stream()
+                .sorted((p1, p2) -> p2.publishDate().compareTo(p1.publishDate()))
+                .map(Object::toString)
+                .collect(Collectors.joining("\n")));
+      } else {
+        output.println("User not found: " + msg.split("wall")[0]);
+      }
+    }
+
+    private void followAction(String msg) {
+      String[] userFollow = msg.split("follow");
+
+      String user = userFollow[0].trim();
+      String follow = userFollow[1].trim();
+
+      if (repository.getUser(user).isEmpty() || repository.getUser(follow).isEmpty()) {
+        output.println("User not found" + msg);
+      } else {
+        User follower = repository.getUser(user).get();
+
+        follower.addToFollowing(repository.getUser(follow).get());
+
+        repository.updateUser(user, follower);
+      }
+    }
+
+    private void readAction(String msg) {
+      Optional<User> read = repository.getUser(msg.trim());
+
+      if (read.isPresent()) {
+        output.println(
+            read.map(
+                user ->
+                    user.posts().stream()
+                        .sorted((p1, p2) -> p2.publishDate().compareTo(p1.publishDate()))
+                        .map(Object::toString)
+                        .collect(Collectors.joining("\n"))));
+      } else {
+        output.println("User not found" + msg);
+      }
+    }
+
+    private void postAction(String msg) {
+      broadcast(msg);
+
+      String[] userMessage = msg.split("->");
+
+      String user = userMessage[0].trim();
+      String message = userMessage[1].trim();
+
+      repository.savePost(user, message);
+    }
+
     private void broadcast(String outputString) {
       for (ServerThread sT : threadList) {
         sT.output.println(outputString);
       }
-    }
-  }
-
-  private void shoutDown() {
-    try {
-      serversocket.close();
-    } catch (IOException e) {
-
     }
   }
 }

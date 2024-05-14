@@ -10,6 +10,8 @@ public class Client implements Runnable {
 
   BufferedReader input;
   PrintWriter output;
+  boolean running = true;
+  Socket socket;
 
   public static void main(String[] args) {
     Client client = new Client();
@@ -21,23 +23,41 @@ public class Client implements Runnable {
     @Override
     public void run() {
 
-      BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+      try {
 
-      while (true) {
-        String input;
-        try {
-          input = reader.readLine();
-          output.println(input);
-        } catch (IOException e) {
-          throw new RuntimeException(e);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        while (running) {
+          String input;
+          try {
+            input = reader.readLine();
+            output.println(input);
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
         }
+
+      } catch (Exception e) {
+        shoutDown();
       }
+    }
+  }
+
+  private void shoutDown() {
+    try {
+      running = false;
+      input.close();
+      output.close();
+      socket.close();
+    } catch (IOException e) {
+
     }
   }
 
   @Override
   public void run() {
-    try (Socket socket = new Socket("localhost", 5000)) {
+    try {
+      socket = new Socket("localhost", 5000);
       input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       output = new PrintWriter(socket.getOutputStream(), true);
 
