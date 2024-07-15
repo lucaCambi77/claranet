@@ -3,16 +3,15 @@ package com.cambi.claranet.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.cambi.claranet.user.User;
+import Server;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class RepositoryTest {
 
-  @InjectMocks Repository repository;
+  Server.Repository repository = new Server.Repository();
 
   @Test
   public void should_create_user() {
@@ -27,7 +26,7 @@ public class RepositoryTest {
     assertTrue(repository.getUser("User").isPresent());
 
     assertEquals(0, repository.getUser("User").get().posts().size());
-    User newUser = repository.getUser("User").get();
+    Server.User newUser = repository.getUser("User").get();
 
     newUser.addPost("Hello world");
     newUser.addPost("Hello world2");
@@ -39,11 +38,11 @@ public class RepositoryTest {
 
     assertTrue(repository.getUser("Followed").isPresent());
 
-    User followed = repository.getUser("Followed").get();
+    Server.User followed = repository.getUser("Followed").get();
     followed.addPost("Hello world");
     followed.addPost("Hello world2");
 
-    User updatedUser = repository.getUser("User").get();
+    Server.User updatedUser = repository.getUser("User").get();
     updatedUser.addToFollowing(repository.getUser("Followed").get());
 
     assertEquals(2, repository.getUser("User").get().posts().size());

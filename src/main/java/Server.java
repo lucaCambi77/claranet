@@ -1,8 +1,3 @@
-package com.cambi.claranet;
-
-import com.cambi.claranet.repository.Repository;
-import com.cambi.claranet.user.Post;
-import com.cambi.claranet.user.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,11 +6,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Server implements Runnable {
@@ -24,7 +24,6 @@ public class Server implements Runnable {
   private final ArrayList<ServerThread> threadList = new ArrayList<>();
   private final ExecutorService executorService = Executors.newCachedThreadPool();
   private ServerSocket serversocket;
-  private final Map<String, User> userMap = new HashMap<>();
   private final Repository repository = new Repository();
   private boolean running = true;
 
@@ -184,6 +183,89 @@ public class Server implements Runnable {
       for (ServerThread sT : threadList) {
         sT.output.println(outputString);
       }
+    }
+  }
+
+  public record User(String name, List<Post> posts, Set<User> following) {
+
+    public void addPost(String message) {
+      posts.add(new Post(name, message, new Date()));
+    }
+
+    public void addToFollowing(User user) {
+      following.add(user);
+    }
+  }
+
+  public record Post(String userName, String message, Date publishDate) {
+
+    @Override
+    public String toString() {
+      return userName
+          + " -> "
+          + String.format(
+              "%s %s", message, PostTimeFormatter.formatTimeDifference(this.publishDate));
+    }
+  }
+
+  public static class Repository {
+    private final Map<String, User> userMap = new HashMap<>();
+
+    public Optional<User> getUser(String userName) {
+      return null == userMap.get(userName) ? Optional.empty() : Optional.of(userMap.get(userName));
+    }
+
+    public User createUser(String userName) {
+      userMap.putIfAbsent(userName, new User(userName, new ArrayList<>(), new HashSet<>()));
+
+      return getUser(userName).get();
+    }
+
+    public User updateUser(String userName, User user) {
+      if (null == user || null == userMap.get(userName)) return null;
+
+      return userMap.put(userName, user);
+    }
+
+    public String savePost(String user, String message) {
+
+      User userObject = getUser(user).orElseGet(() -> createUser(user));
+
+      userObject.addPost(message);
+
+      updateUser(user, userObject);
+
+      return message;
+    }
+  }
+
+  public static class PostTimeFormatter {
+    private static final long ONE_MINUTE = TimeUnit.MINUTES.toMillis(1);
+    private static final long ONE_HOUR = TimeUnit.HOURS.toMillis(1);
+    private static final long ONE_DAY = TimeUnit.DAYS.toMillis(1);
+
+    public static String formatTimeDifference(Date creationDate) {
+      long timeDifference = System.currentTimeMillis() - creationDate.getTime();
+      long timeDiff;
+      String timeUnit;
+      if (timeDifference < ONE_MINUTE) {
+        timeDiff = TimeUnit.MILLISECONDS.toSeconds(timeDifference);
+        timeUnit = "second";
+      } else if (timeDifference < ONE_HOUR) {
+        timeDiff = TimeUnit.MILLISECONDS.toMinutes(timeDifference);
+        timeUnit = "minute";
+      } else if (timeDifference < ONE_DAY) {
+        timeDiff = TimeUnit.MILLISECONDS.toHours(timeDifference);
+        timeUnit = "hour";
+      } else {
+        timeDiff = TimeUnit.MILLISECONDS.toDays(timeDifference);
+        timeUnit = "day";
+      }
+
+      if (timeDiff > 1) {
+        timeUnit = timeUnit + "s";
+      }
+      return String.format("(%d %s ago)", timeDiff, timeUnit);
     }
   }
 }

@@ -2,29 +2,36 @@
 
 [See description](https://github.com/xpeppers/social_networking_kata)
 
-## Requirements : 
+## Requirements :
 
 * Java 17
 * Gradle
 
 ## Getting Started
 
-* Clone the project locally 
+* Clone the project locally
+
 ```bash
 git clone git@github.com:lucaCambi77/claranet.git
 ```
 
-* To build the project 
+* To build the project
+
 ```bash
-./gradlew clean build
+javac Client.java
+javac Server.java
 ```
 
-## Run 
-
-* To run the application 
+## Run
 
 ```bash
-java -jar build/libs/claranet-1.0.0.jar
+java Server
+```
+
+Then you can run multiple clients (in different bash shells);
+
+```bash
+java Client
 ```
 
 ### Shell commands
